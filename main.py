@@ -12,6 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Import your forms from the forms.py
 from forms import CreateForm, RegisterForm, LoginForm, CommentForm
 from smtplib import SMTP
+import os
 
 
 def admin_only(f):
@@ -25,7 +26,7 @@ def admin_only(f):
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 Bootstrap5(app)
 ckeditor = CKEditor(app)
 
@@ -36,7 +37,7 @@ class Base(DeclarativeBase):
 
 
 login_manager = LoginManager()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 login_manager.init_app(app)
@@ -243,4 +244,4 @@ def about_page():
     return render_template("about.html", background_img=back_img)
 
 
-app.run(debug=True)
+app.run(debug=False)

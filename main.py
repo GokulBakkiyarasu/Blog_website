@@ -224,8 +224,8 @@ def delete(post_id):
 def contact_page():
     back_img = "static/assets/img/contact-bg.jpeg"
     if request.method == "POST":
-        sender_email = "blogcontactmail03@gmail.com"
-        passkey = "zyqxzumoujosjash"
+        sender_email = os.environ.get("MAIL")
+        passkey = os.environ.get("PASSKEY")
         receiver_email = "gokulbakkiyarasu@gmail.com"
         sent_message = f"subject:Blog's Contact Mail\n{request.form['name']}\n{request.form['email']}\n{request.form['phone']}\n{request.form['message']}"
         print(sent_message)

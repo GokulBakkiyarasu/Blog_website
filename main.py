@@ -243,5 +243,5 @@ def about_page():
     back_img = "static/assets/img/about-bg.jpeg"
     return render_template("about.html", background_img=back_img)
 
-
-app.run(debug=False)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
